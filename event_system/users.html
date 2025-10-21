@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2 id="form-title">Register User</h2>
+
+    <!-- Register Form -->
+    <div id="user-form-container">
+      <form id="user-registration-form" class="form-card">
+        <input type="hidden" id="user-id" name="id" />
+
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="contact">Contact Number (11 digits):</label>
+        <input
+          type="tel"
+          id="contact"
+          name="contact"
+          pattern="[0-9]{11}"
+          maxlength="11"
+          title="11 digit contact number"
+          required
+        />
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" />
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" />
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" />
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn">Register</button>
+          <button type="button" class="clear-btn" onclick="clearForm('user-registration-form')">Clear</button>
+        </div>
+
+        <p id="form-message"></p>
+      </form>
+    </div>
+
+    <!-- View Users -->
+    <div id="user-view-container" style="display: none;">
+      <h3>Registered Users</h3>
+      <input type="text" id="user-search" placeholder="Search by Name or Email..." />
+      <table id="users-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const action = params.get("action");
+
+      if (action === "view") {
+        document.getElementById("form-title").textContent = "View Users";
+        document.getElementById("user-form-container").style.display = "none";
+        document.getElementById("user-view-container").style.display = "block";
+        loadUsers();
+      } else {
+        document.getElementById("form-title").textContent = "Register User";
+        document.getElementById("user-registration-form").addEventListener("submit", handleUserFormSubmit);
+      }
+
+      const search = document.getElementById("user-search");
+      if (search) search.addEventListener("keyup", filterUsers);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participants</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2>Participants</h2>
+
+    <div class="form-card">
+      <input type="text" id="search-participant" placeholder="Search..." onkeyup="filterParticipants()">
+      <table id="participants-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Event</th>
+            <th>Status</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody id="participants-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadParticipants);
+  </script>
+</body>
+</html>

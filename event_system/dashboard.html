@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Event Attendance System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Event Attendance Dashboard</h1>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+
+        <!-- User Management -->
+        <a href="users.html?action=register" class="dashboard-card register">
+            <h3>Register User</h3>
+            <p>Add new participants to the system.</p>
+        </a>
+
+        <a href="view_users.html?action=view" class="dashboard-card view">
+            <h3>View Users</h3>
+            <p>View, search, and manage registered users.</p>
+        </a>
+
+        <!-- Event and Attendance -->
+        <a href="events.html?action=register" class="dashboard-card events">
+            <h3>Register Events</h3>
+            <p>Create and manage upcoming events.</p>
+        </a>
+
+        <a href="attendance.html?action=mark" class="dashboard-card attendance">
+            <h3>Mark Attendance</h3>
+            <p>Record attendance for specific events.</p>
+        </a>
+
+        <!-- Audit and Reports -->
+        <a href="audit.html" class="dashboard-card audit">
+            <h3>Audit Logs</h3>
+            <p>Track user actions and system logs.</p>
+        </a>
+
+        <a href="participants.html" class="dashboard-card participants">
+            <h3>Participants</h3>
+            <p>Monitor all event participants.</p>
+        </a>
+
+        <a href="reports.html" class="dashboard-card reports">
+            <h3>Reports</h3>
+            <p>Generate event and attendance summaries.</p>
+        </a>
+
+        <a href="history.html" class="dashboard-card history">
+            <h3>Attendance History</h3>
+            <p>View past attendance records.</p>
+        </a>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Event Attendance Management System</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

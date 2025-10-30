@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Event</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .error {
+      border: 2px solid #e74c3c !important;
+      background: #ffe9e9 !important;
+    }
+
+    .loading-text {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #888;
+    }
+
+    .success-popup {
+      background: #2ecc71;
+      color: white;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: none;
+      text-align: center;
+      font-size: 15px;
+      animation: fade 0.6s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+    <a href="view_events.html" class="back-link">&leftarrow; Back to Events</a>
+    <h2>Edit Event</h2>
+
+    <div class="form-card">
+
+      <div class="loading-text" id="loading-message">Loading event information...</div>
+      <div class="success-popup" id="success-popup">Event updated successfully!</div>
+
+      <form id="edit-event-form">
+        <input type="hidden" id="event-id">
+
+        <input type="text" id="edit-name" placeholder="Event Name" required />
+        <input type="date" id="edit-date" required />
+        <input type="text" id="edit-location" placeholder="Event Location" required />
+        <textarea id="edit-description" placeholder="Event Description"></textarea>
+
+        <button type="submit" class="primary-btn" style="margin-top:15px;">Update Event</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const id = new URLSearchParams(window.location.search).get("id");
+
+      if (!id) return alert("Missing ID!");
+
+      loadEventInfo(id);
+
+      document.getElementById("edit-event-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        validateAndSubmit();
+      });
+    });
+
+    // LOAD DATA
+    async function loadEventInfo(id) {
+      const res = await apiCall("get_event", { id });
+
+      if (!res.success) return alert("Failed to fetch event!");
+
+      const ev = res.data;
+      document.getElementById("event-id").value = ev.id;
+      document.getElementById("edit-name").value = ev.name;
+      document.getElementById("edit-date").value = ev.date;
+      document.getElementById("edit-location").value = ev.location;
+      document.getElementById("edit-description").value = ev.description;
+
+      document.getElementById("loading-message").style.display = "none";
+    }
+
+    function validateAndSubmit() {
+      const name = document.getElementById("edit-name");
+      const date = document.getElementById("edit-date");
+      const location = document.getElementById("edit-location");
+
+      let valid = true;
+
+      [name, date, location].forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add("error");
+          valid = false;
+        } else {
+          field.classList.remove("error");
+        }
+      });
+
+      if (!valid) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      updateEvent();
+    }
+
+    // UPDATE EVENT
+    async function updateEvent() {
+      const data = {
+        id: document.getElementById("event-id").value,
+        name: document.getElementById("edit-name").value,
+        date: document.getElementById("edit-date").value,
+        location: document.getElementById("edit-location").value,
+        description: document.getElementById("edit-description").value || "No description provided",
+      };
+
+      const res = await apiCall("update_event", data);
+
+      if (res.success) {
+        showSuccess();
+        setTimeout(() => {
+          window.location.href = "view_events.html";
+        }, 1000);
+      } else {
+        alert(res.message);
+      }
+    }
+
+    function showSuccess() {
+      const pop = document.getElementById("success-popup");
+      pop.style.display = "block";
+
+      setTimeout(() => {
+        pop.style.display = "none";
+      }, 1800);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&leftarrow; Back to Login</a>
+    <h2 id="form-title">Register User</h2>
+
+    <!-- Register Form -->
+    <div id="user-form-container">
+      <form id="user-registration-form" class="form-card" method="post">  <!-- Added method="post" -->
+        <input type="hidden" id="user-id" name="id" />
+
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="contact">Contact Number (11 digits):</label>
+        <input
+          type="tel"
+          id="contact"
+          name="contact"
+          pattern="[0-9]{11}"
+          maxlength="11"
+          title="11 digit contact number"
+          required
+        />
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" />
+
+        <label for="state">Province:</label>
+        <input type="text" id="state" name="state" />
+
+        <label for="country">Municipality:</label>
+        <input type="text" id="country" name="country" />
+
+        <label for="role">Role:</label>
+          <select id="role" name="role">
+              <option value="">--Select Role--</option>
+              <option value="user">User</option>
+          </select>
+
+        <p style="color: red;">Note! After Registering an account the default password will be "password123". 
+          You can change it after loggin in the edit profile section or in the forgot password button.
+        </p>  
+        
+        <div class="form-actions">
+          <button type="submit" id="submit-btn">Register</button>
+          <button type="button" class="clear-btn" onclick="clearForm('user-registration-form')">Clear</button>
+        </div>
+
+        
+
+        <p id="form-message"></p>
+      </form>
+    </div>
+
+    <script src="scripts.js"></script>
+    
+         <script>
+           document.addEventListener('DOMContentLoaded', async () => {
+             const urlParams = new URLSearchParams(window.location.search);
+             const userId = urlParams.get('id');
+             if (userId) {
+               // Change title and button text for editing
+               document.getElementById('form-title').textContent = 'Edit User';
+               document.getElementById('submit-btn').textContent = 'Update';
+               
+               // Load user data and populate form
+               const res = await apiCall('get_user', { id: userId });
+               if (res.success && res.data) {
+                 const user = res.data;
+                 document.getElementById('user-id').value = user.id;
+                 document.getElementById('name').value = user.name;
+                 document.getElementById('email').value = user.email;
+                 document.getElementById('contact').value = user.contact;
+                 document.getElementById('gender').value = user.gender;
+                 document.getElementById('address').value = user.address;
+                 document.getElementById('state').value = user.state;
+                 document.getElementById('country').value = user.country;
+                 document.getElementById('role').value = user.role;
+               } else {
+                 alert(res.message || 'Failed to load user for editing.');
+               }
+             }
+             // Attach form submit handler
+             const form = document.getElementById('user-registration-form');
+             if (form) form.addEventListener('submit', handleUserFormSubmit);
+           });
+         </script>
+         
+
+  </div>
+</body>
+</html>

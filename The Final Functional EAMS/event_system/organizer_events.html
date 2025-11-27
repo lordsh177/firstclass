@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="organizer_dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2 id="form-title">Register Event</h2>
+
+    <div id="event-form-container">
+      <form id="event-registration-form" class="form-card">
+        <input type="hidden" id="event-id" name="id">
+
+        <label for="event-name">Event Name:</label>
+        <input type="text" id="event-name" name="event_name" required>
+
+        <label for="event-date">Event Date:</label>
+        <input type="date" id="event-date" name="event_date" required>
+
+        <label for="event-location">Location:</label>
+        <input type="text" id="event-location" name="location" required>
+
+        <label for="event-description">Description:</label>
+        <textarea id="event-description" name="description" rows="3"></textarea>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn">Register Event</button>
+          <button type="button" class="clear-btn" onclick="clearForm('event-registration-form')">Clear</button>
+        </div>
+        <p id="form-message"></p>
+      </form>
+    </div>
+
+    <div id="event-view-container" style="display:none;">
+      <h3>Event List</h3>
+      <input type="text" id="event-search" placeholder="Search by Event Name...">
+      <table id="events-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('action') === 'view') {
+        document.getElementById('form-title').textContent = 'View Events';
+        document.getElementById('event-form-container').style.display = 'none';
+        document.getElementById('event-view-container').style.display = 'block';
+        loadEvents();
+      } else {
+        document.getElementById('event-registration-form').addEventListener('submit', handleEventFormSubmit);
+      }
+      document.getElementById('event-search').addEventListener('keyup', filterEvents);
+    });
+  </script>
+</body>
+</html>

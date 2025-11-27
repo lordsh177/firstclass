@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance History</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="user_dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2>Attendance History</h2>
+
+    <div class="form-card">
+      <input type="text" id="history-search" placeholder="Search by User or Event...">
+      <table id="history-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Event</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+            </tr>
+          </thead>
+
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="scripts.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadUserHistory(); // user-only history
+  });
+</script>
+
+</body>
+</html>

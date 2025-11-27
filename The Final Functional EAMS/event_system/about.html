@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – Event Attendance Management System</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 26px;
+      color: #222;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+      line-height: 1.7;
+    }
+
+    h3 {
+      margin-top: 25px;
+      margin-bottom: 10px;
+      color: #111;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 6px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+    <a id="back-dashboard" class="back-link">&larr; Back to Dashboard</a>
+    <h2>About This System</h2>
+
+    <div class="card">
+
+      <h3>Event Attendance Management System</h3>
+      <p>
+        The Event Attendance Management System is designed to simplify and automate
+        attendance monitoring through QR code scanning, user registration, event creation,
+        and real-time check-in/check-out. This system provides a smooth workflow for
+        administrators, organizers, and participants.
+      </p>
+
+      <h3>Main Features</h3>
+      <ul>
+        <li>✔ Unique QR Code for every registered user</li>
+        <li>✔ Printable QR ID card</li>
+        <li>✔ Mobile-optimized QR Scanner</li>
+        <li>✔ Role-based dashboards (Admin, Organizer, User)</li>
+        <li>✔ Attendance history with timestamps</li>
+        <li>✔ Automated reporting & PDF export</li>
+        <li>✔ User profile editing and secure password change</li>
+        <li>✔ Email notifications for new events</li>
+      </ul>
+
+      <h3>Purpose</h3>
+      <p>
+        This system replaces manual attendance sheets with an efficient digital platform.
+        It ensures accuracy, quick scanning, reduced paperwork, and professional event tracking.
+      </p>
+
+      <h3>Technologies Used</h3>
+      <ul>
+        <li>✔ HTML, CSS, JavaScript</li>
+        <li>✔ PHP (API backend)</li>
+        <li>✔ MySQL Database</li>
+        <li>✔ PHP QRCode Library</li>
+        <li>✔ HTML5QR Scanner</li>
+        <li>✔ jsPDF for report export</li>
+      </ul>
+
+      <h3>System Description</h3>
+      <p>
+        Users register and receive a unique QR code stored in the system. Organizers can
+        create events, manage attendance, and view analytics. The scanner supports mobile
+        devices for easy on-site validation. Admins can manage all users, events, and logs.
+      </p>
+
+      <p style="margin-top: 20px; font-weight: bold;">
+        Thank you for using the Event Attendance Management System!
+      </p>
+
+    </div>
+
+    <div class="footer">
+      © 2025 Event Attendance Management System
+    </div>
+
+  </div>
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const role = localStorage.getItem("role");
+  const backBtn = document.getElementById("back-dashboard");
+
+  let target = "index.html"; // fallback if no role
+
+  if (role === "admin") {
+    target = "dashboard.html";
+  } else if (role === "organizer") {
+    target = "organizer_dashboard.html";
+  } else if (role === "user") {
+    target = "user_dashboard.html";
+  }
+
+  backBtn.href = target;
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View QR Code</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <a href="user_dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+        <h2>Your QR Code</h2>
+
+        <div class="form-card" style="
+            text-align:center; 
+            display:flex; 
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            padding:20px;">
+
+            <img id="user-qr" src="" alt="Your QR Code"
+                style="max-width:260px; border:1px solid #ddd; padding:12px; border-radius:8px; margin-bottom:10px;" />
+
+            <!-- Name -->
+            <p id="qr-name" style="margin:5px 0 0 0; font-size:16px; font-weight:600;"></p>
+
+            <!-- REG ID -->
+            <p id="qr-regid" style="margin:0 0 15px 0; font-size:14px; color:#555;"></p>
+
+            <button id="download-btn"
+                style="padding:10px 20px; background:#007bff; color:white; border:none; border-radius:6px; cursor:pointer;">
+                Download QR Code
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="scripts.js"></script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const userId = localStorage.getItem("userId");
+    if (!userId) return alert("User not logged in.");
+
+    const res = await apiCall("get_user", { id: userId });
+
+    if (!res.success || !res.data) {
+        alert("Unable to load user.");
+        return;
+    }
+
+    const user = res.data;
+
+    const qrPath = user.qr_code;
+    document.getElementById("user-qr").src = qrPath;
+
+    // NEW: Add name + reg ID under QR
+    document.getElementById("qr-name").textContent = user.name;
+    document.getElementById("qr-regid").textContent = user.reg_id;
+
+    // Download
+    document.getElementById("download-btn").onclick = () => {
+        const a = document.createElement("a");
+        a.href = qrPath;
+        a.download = user.reg_id + ".png";
+        a.click();
+    };
+});
+
+    </script>
+
+</body>
+</html>

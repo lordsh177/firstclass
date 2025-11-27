@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mark Attendance</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2>Mark Attendance</h2>
+
+    <div class="form-card">
+      <form id="mark-attendance-form">
+        <label for="event-select">Select Event:</label>
+        <select id="event-select" name="event_id" required>
+          <option value="">Loading events...</option>
+        </select>
+
+<div id="qr-reader" style="width:300px; margin-bottom:15px;"></div>
+
+
+        <label for="reg-id">Enter QR / Registration ID:</label>
+        <input
+          type="text"
+          id="reg-id"
+          name="reg_id"
+          placeholder="e.g., REG-1678888888"
+          required
+        />
+
+        <div class="form-actions">
+          <button type="button" onclick="markAttendance('in')">Check In</button>
+          <button type="button" onclick="markAttendance('out')">Check Out</button>
+        </div>
+
+        <p id="attendance-message"></p>
+      </form>
+    </div>
+
+    <div id="view-attendance-container" style="margin-top: 30px;">
+      <h3>Attendance Records</h3>
+      <table id="attendance-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Event</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+  <script src="scripts.js"></script>
+ <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadEventOptions();
+  await loadAttendanceRecords();
+
+  const html5QrCode = new Html5Qrcode("qr-reader");
+  const config = { fps: 20, qrbox: 200 };
+
+  let canScan = true;
+  let cooldownTimer = null;
+
+  function startCooldown() {
+    canScan = false;
+    let timeLeft = 5;
+
+    const msg = document.getElementById("attendance-message");
+    msg.textContent = `Next scan available in ${timeLeft} seconds...`;
+
+    cooldownTimer = setInterval(() => {
+      timeLeft--;
+
+      if (timeLeft > 0) {
+        msg.textContent = `Next scan available in ${timeLeft} seconds...`;
+      } else {
+        clearInterval(cooldownTimer);
+        msg.textContent = "";
+        canScan = true;
+      }
+    }, 1000);
+  }
+
+  html5QrCode.start(
+    { facingMode: "environment" },
+    config,
+    (decodedText) => {
+      if (!canScan) return;
+
+      document.getElementById("reg-id").value = decodedText;
+
+      // Execute check-in
+      markAttendance('in');
+
+      startCooldown();
+    },
+    (error) => {}
+  ).catch((err) => {
+    console.error("Camera error:", err);
+  });
+});
+</script>
+
+
+</body>
+</html>

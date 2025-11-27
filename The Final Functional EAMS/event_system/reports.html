@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2>Reports</h2>
+
+    <div class="form-card">
+      <form id="report-filter-form">
+        <label for="date-from">Date From:</label>
+        <input type="date" id="date-from" name="date_from" required>
+
+        <label for="date-to">Date To:</label>
+        <input type="date" id="date-to" name="date_to" required>
+
+        <button type="button" onclick="generateReport()">Generate Report</button>
+        <button type="button" id="download-pdf-btn" onclick="downloadReportPDF()" disabled>
+          Download PDF
+        </button>
+
+      </form>
+
+      <div id="report-results" style="margin-top:20px;">
+        <h3>Report Results</h3>
+        <table id="reports-table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Total Participants</th>
+              <th>Checked In</th>
+              <th>Checked Out</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<!-- jsPDF -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<!-- AutoTable plugin -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.29/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // For future enhancement
+    });
+  </script>
+</body>
+</html>

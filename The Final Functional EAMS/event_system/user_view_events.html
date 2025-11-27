@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Events</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <a href="user_dashboard.html" class="back-link">&leftarrow; Back to Dashboard</a>
+    <h2>View Events</h2>
+
+    
+
+      <!-- TABLE -->
+      <table id="events-table" style="margin-top:15px;">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Event Name</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadEvents();
+      document.getElementById("event-search").addEventListener("keyup", filterEvents);
+      document.getElementById("add-event-form").addEventListener("submit", addEvent);
+    });
+
+    // LOAD EVENTS
+    async function loadEvents() {
+      const response = await apiCall("get_events");
+      const tableBody = document.querySelector("#events-table tbody");
+      tableBody.innerHTML = "";
+
+      response.data.forEach(ev => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${ev.id}</td>
+          <td>${ev.name}</td>
+          <td>${ev.description}</td>
+          <td>${ev.location}</td>
+          <td>${ev.date}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

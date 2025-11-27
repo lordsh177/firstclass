@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Event Attendance System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Event Attendance Dashboard</h1>
+        <p>This is an <span>user</span> page</p>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+
+        <!-- User Management -->
+        <a href="user_manage_account.html" class="dashboard-card view">
+            <h3>Manage Account</h3>
+            <p>Manage user only account.</p>
+        </a>
+
+        <a href="user_view_events.html" class="dashboard-card history">
+            <h3>View Events</h3>
+            <p>View event records.</p>
+        </a>
+
+        <a href="user_viewQr.html" class="dashboard-card View Qr">
+            <h3>View Qr</h3>
+            <p>View user unique Qr.</p>
+        </a>
+
+        <a href="user_history.html" class="dashboard-card history">
+            <h3>Attendance History</h3>
+            <p>View past attendance records.</p>
+        </a>
+
+        
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Event Attendance Management System</p>
+        <a href="about.html">About Us</a>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
